@@ -1,0 +1,5 @@
+Package: bhunter
+Version: 0.0.0.1
+Maintainer: voropaevdmtr@gmail.com
+Architecture: all
+Depends: python3

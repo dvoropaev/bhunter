@@ -1,0 +1,9 @@
+[Unit]
+Description = XXX
+
+[Service]
+ExecStart=/usr/bin/bhunter start
+Type=fork
+
+[Install]
+WantedBy=multi-user.target
