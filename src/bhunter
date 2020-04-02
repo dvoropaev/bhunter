@@ -152,9 +152,9 @@ def SSHAttacker():
 #------------- UI Section -------------
 def bunner():
     os.system("clear")
-    print("================")
-    print("BHUNER TEST")
-    print("================")
+    print("=================")
+    print("  BHUNTER test  ")
+    print("=================")
 
 def importLP(file):
     f = open(file, "r")
@@ -178,7 +178,7 @@ def importTargets(file):
 
 def ImportExportMenu():
     print(" 1) Import loginpairs\n 2) Export loginpairs\n 3) Import targets\n 4) Return\n")
-    str = input(" >>")
+    str = input(" ")
     if(str == "1"):
         file = input(" path to file: ")
         importLP(file)
@@ -192,9 +192,9 @@ def ImportExportMenu():
 def mainMenu():
     os.chdir(logs)
     while True:
-        # bunner()
+        bunner()
         print(" 1) Add loginpair\n 2) Add target\n 3) Import/Export\n 4) Info\n")
-        str = input(" >>")
+        str = input(" ")
         if(str == "1"):
             newLogin = input(" login: ")
             newPassword = input(" password: ")
