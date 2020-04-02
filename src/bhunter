@@ -11,11 +11,9 @@ import queue
 import inspect
 
 
-debugMode = 1
 
 logs = "/var/log/bhunter/"
 
-debugLog = logs + "debug.log"
 honeypotLog = logs + "honeypot.log"
 attackLog = logs + "attack.log"
 hacked = logs + "hacked.log"
