@@ -149,6 +149,63 @@ def SSHAttacker():
                 break
         logger(attackLog, "complete attack  {}".format(target))
 
+#------------- UI Section -------------
+def bunner():
+    os.system("clear")
+    print("================")
+    print("BHUNER TEST")
+    print("================")
+
+def importLP(file):
+    f = open(file, "r")
+    for i in f:
+        loginPair = i[:-1].split(" :: ") # [:-1] - чтобы убрать перевод строки
+        addLoginPair(loginPair[0], loginPair[1] if len(loginPair) > 0 else "",loginPair[2] if len(loginPair) > 1 else "")
+    f.close()
+
+def exportLP(file):
+    f = open(file, "w")
+    for i in listOfLogins:
+        print(i)
+        f.write("{} :: {} :: {}\n".format(i[1][0], i[1][1], i[0]))
+    f.close()
+
+def importTargets(file):
+    f = open(file, "r")
+    for i in f:
+        addTarget(i[:-1])
+    f.close()
+
+def ImportExportMenu():
+    print(" 1) Import loginpairs\n 2) Export loginpairs\n 3) Import targets\n 4) Return\n")
+    str = input(" >>")
+    if(str == "1"):
+        file = input(" path to file: ")
+        importLP(file)
+    if(str == "2"):
+        file = input(" path to file: ")
+        exportLP(file)
+    if(str == "3"):
+        file = input(" path to file: ")
+        importTargets(file)
+
+def mainMenu():
+    os.chdir(logs)
+    while True:
+        # bunner()
+        print(" 1) Add loginpair\n 2) Add target\n 3) Import/Export\n 4) Info\n")
+        str = input(" >>")
+        if(str == "1"):
+            newLogin = input(" login: ")
+            newPassword = input(" password: ")
+            addLoginPair(newLogin, newPassword, 1)
+        if(str == "2"):
+            newTarget = input(" target: ")
+            addTarget(newTarget)
+        if(str == "3"):
+            ImportExportMenu()
+        if(str == "4"):
+            infoMenu()
 
 #------------- Main Section -------------
 def cleaner():
@@ -158,67 +215,11 @@ def cleaner():
     if(len(listOfLogins) > 1000):
         listOfLogins = listOfLogins[0, 100]
 
-def ui():
-    def bunner():
-        os.system("clear")
-        print("================")
-        print("BHUNER TEST")
-        print("================")
-    def addMenu():
-        print("1) Add target\n2) Add loginpair\n")
-        str = input()
-        if(str == "1"):
-            addTarget(input("new target: "))
-        if(str == "2"):
-            addLoginPair(input("new login: "), input("password: "), 0)
-        t = input()
-    def importMenu():
-        print("1) import loginPairs\n2) import targets\n")
-        str = input()
-        if(str == "1"):
-            print("test test test")
-        if(str == "2"):
-            print("test test test")
-        t = input()
-    def exportMenu():
-        print("1) Export loginpairs2) Export targets\n\n")
-        if(str == "1"):
-            print("test test test")
-            # filePath = input("filePath:")
-            # for i in setOfCaptureTargets.keys():
-            #     addToFile(filePath, i + "\n")
-        if(str == "2"):
-            print("test test test")
-            # filePath = input("filePath:")
-            # for i in listOfLogins:
-            #     addToFile(filePath, i[1][0] + " " + i[1][1] + "\n")
-        t = input()
-    def showMenu():
-        print("1) Show loginPairs\n2) Show targets\n")
-        str = input()
-        if(str == "1"):
-            for i in listOfLogins:
-                print("{} :: {}".format(i[1][0], i[1][1]))
-        if(str == "2"):
-            print("test test test")
-        t = input()
-    while True:
-        bunner()
-        print("1) Targets\n2) LoginPairs\n3) Info\n4) Pause\n 5) Stop\n")
-        str = input()
-        if(str == "1"):
-            addMenu()
-        if(str == "2"):
-            importMenu()
-        if(str == "3"):
-            exportMenu()
-        if(str == "4"):
-            showMenu()
 
 def main():
     logger(honeypotLog, "STARTING...")
     logger(attackLog, "STARTINDG...")
     Thread(target=SSHhoneypot, args=()).start()
-    Thread(target=ui, args=()).start()
+    Thread(target=mainMenu, args=()).start()
     SSHAttacker()
 main()
