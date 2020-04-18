@@ -17,6 +17,7 @@ logs = "/var/log/bhunter/"
 honeypotLog = logs + "honeypot.log"
 attackLog = logs + "attack.log"
 hacked = logs + "hacked.log"
+debugLog = logs + "debug.log"
 configs = "/etc/bhunter/"
 serverKey = configs + "server.key"
 
