@@ -10,7 +10,7 @@ import socket, sys, threading
 import queue
 import inspect
 
-
+debugMode = 1
 
 logs = "/var/log/bhunter/"
 
