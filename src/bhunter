@@ -130,7 +130,7 @@ def SSHCheck(target, SSHport, user, password):
         channel.get_pty()
         channel.settimeout(5)
         channel.exec_command('whoami')
-        if(login in channel.recv(1024)):
+        if(user in channel.recv(1024)):
             resultCode = 0
         else:
             debug("controversial case of connest: {} {} {}".format(target, user, password))
