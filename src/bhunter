@@ -197,6 +197,11 @@ def ImportExportMenu():
         file = input(" path to file: ")
         importTargets(file)
 
+def infoMenu():
+    bunner()
+    print("loginpairs: {}".format(len(listOfLogins)))
+    print("queue: {}".format(len(queOfTargets)))
+
 def mainMenu():
     os.chdir(logs)
     while True:
