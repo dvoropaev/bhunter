@@ -25,6 +25,7 @@ listOfLogins = [] # login = (rate, ("login", "password"))
 queOfTargets = queue.Queue() #.put() .get()
 setOfCaptureTargets = {} # (target, captureTime)
 
+
 def addToFile(file, str):
     f = open(file, "a")
     f.write(str)
@@ -185,6 +186,7 @@ def importTargets(file):
     f.close()
 
 def ImportExportMenu():
+    bunner()
     print(" 1) Import loginpairs\n 2) Export loginpairs\n 3) Import targets\n 4) Return\n")
     str = input(" ")
     if(str == "1"):
@@ -199,8 +201,9 @@ def ImportExportMenu():
 
 def infoMenu():
     bunner()
-    print("loginpairs: {}".format(len(listOfLogins)))
-    print("queue: {}".format(len(queOfTargets)))
+    print(" loginpairs: {}".format(len(listOfLogins)))
+    str = input(" ")
+    # print("queue: {}".format(queOfTargets.size()))
 
 def mainMenu():
     os.chdir(logs)
