@@ -67,7 +67,6 @@ def SSHLoginsCollector(source, client_socket):
                     flag = 0
                     break
             if(flag):
-                print("add")
                 addLoginPair(username, password, 0)
             return paramiko.AUTH_FAILED
         def get_allowed_auths(self, username):
@@ -116,7 +115,7 @@ def SSHhoneypot():
 def SSHCheck(target, SSHport, user, password):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    resultCode = 0
+    resultCode = 3
     try:
         ssh.connect(target, port = SSHport, username = user, password = password, timeout=5, banner_timeout = 5, auth_timeout=5)
     except paramiko.AuthenticationException:
@@ -125,6 +124,16 @@ def SSHCheck(target, SSHport, user, password):
         resultCode = 2
     except paramiko.ssh_exception.SSHException:
         resultCode = 3
+    else:
+        channel = ssh.get_transport().open_session()
+        channel.get_pty()
+        channel.settimeout(5)
+        channel.exec_command('whoami')
+        if(if login in channel.recv(1024)):
+            resultCode = 0
+        else:
+            debug("controversial case of connest: {} {} {}".format(target, user, password))
+        channel.close()
     finally:
         ssh.close()
     return resultCode
