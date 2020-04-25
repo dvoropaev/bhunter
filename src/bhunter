@@ -149,7 +149,8 @@ def SSHAttacker():
             if(status == 0):
                 logger(attackLog, "PASSWORD FOUND   {} {} {}".format(target, i[1][0], i[1][1]))
                 logger(hacked, "{} {} {}".format(target, i[1][0], i[1][1]))
-                i[0] += 1
+                i[0] = (i[0] + 10)/2
+                i[0] = round(i[0], 1)
                 listOfLogins.sort()
                 listOfLogins.reverse()
             if(status >= 2):
@@ -201,6 +202,9 @@ def ImportExportMenu():
 def infoMenu():
     bunner()
     print(" loginpairs: {}".format(len(listOfLogins)))
+    print("\n Top 10 loginpairs:")
+    for i in listOfLogins[:10]:
+        print(" {} :: {} :: {}".format(i[1][0], i[1][1], i[0]))
     str = input(" ")
     # print("queue: {}".format(queOfTargets.size()))
 
@@ -223,18 +227,23 @@ def mainMenu():
             infoMenu()
 
 #------------- Main Section -------------
-def cleaner():
-    global listOfLogins
-    listOfLogins.sort()
-    listOfLogins.reverse()
-    if(len(listOfLogins) > 1000):
-        listOfLogins = listOfLogins[0, 100]
 
+def loginPairsCleaner():
+    global listOfLogins
+    if(len(listOfLogins) > 0):
+        listOfLogins = listOfLogins[:100]
+        for i in listOfLogins:
+            if i[0] > 0:
+                i[0] = max(1, i[0] - 1)
 
 def main():
     logger(honeypotLog, "STARTING...")
     logger(attackLog, "STARTINDG...")
     Thread(target=SSHhoneypot, args=()).start()
     Thread(target=mainMenu, args=()).start()
-    SSHAttacker()
+    Thread(target=SSHAttacker, args=()).start()
+    while True:
+        time.sleep(1300) # 30 minutes
+        print("lpc")
+        loginPairsCleaner()
 main()
