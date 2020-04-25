@@ -62,8 +62,6 @@ def SSHLoginsCollector(source, client_socket):
             logger(honeypotLog, "new login attempt ({}, {}, {})".format(source[0], username, password))
             flag = 1
             for i in listOfLogins:
-                debug("current lp: ({}, {}), lp in list: ({}. {})".format(username, password, i[1][0], i[1][1]))
-                debug("result = {}".format(i[1][0] == username and i[1][1] == password))
                 if(i[1][0] == username and i[1][1] == password):
                     flag = 0
                     break
