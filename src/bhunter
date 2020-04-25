@@ -230,7 +230,9 @@ def mainMenu():
 
 def loginPairsCleaner():
     global listOfLogins
+    logger(debugLog, "lpc: {} loginpairs in list".format(len(listOfLogins)))
     if(len(listOfLogins) > 0):
+        logger(debugLog, "lpc: cleaning loginpairs".format(len(listOfLogins)))
         listOfLogins = listOfLogins[:100]
         for i in listOfLogins:
             if i[0] > 0:
