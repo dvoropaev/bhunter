@@ -203,6 +203,7 @@ def ImportExportMenu():
 def infoMenu():
     bunner()
     print(" loginpairs: {}".format(len(listOfLogins)))
+    print(" targets in queue: {}".format(queOfTargets.qsize()))
     print("\n Top 10 loginpairs:")
     for i in listOfLogins[:10]:
         print(" {} :: {} :: {}".format(i[1][0], i[1][1], i[0]))
