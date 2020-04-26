@@ -168,9 +168,9 @@ def SSHAttacker():
 #------------- UI Section -------------
 def bunner():
     os.system("clear")
-    print("=================")
-    print("  BHUNTER test  ")
-    print("=================")
+    print("====================")
+    print("    BHUNTER test  ")
+    print("====================")
 
 def importLP(file):
     f = open(file, "r")
