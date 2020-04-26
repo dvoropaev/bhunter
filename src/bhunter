@@ -20,6 +20,7 @@ hacked = logs + "hacked.log"
 debugLog = logs + "debug.log"
 configs = "/etc/bhunter/"
 serverKey = configs + "server.key"
+defLogins = configs + "defLogins.txt"
 
 listOfLogins = [] # login = (rate, ("login", "password"))
 queOfTargets = queue.Queue() #.put() .get()
@@ -48,7 +49,7 @@ def addTarget(target):
     logger(honeypotLog, "new target   {}".format(target))
 
 def addLoginPair(login, password, rate):
-    debug("{} {} {} {}".format(inspect.currentframe().f_code.co_name, login, password, rate))
+    debug("{} {} {} {}".format(inspect.currentframe().f_code.co_name, login, password, float(rate)))
     listOfLogins.append([rate, (login, password)])
     logger(honeypotLog, "new loginPair ({}, {})".format(login, password))
 
@@ -169,7 +170,7 @@ def importLP(file):
     f = open(file, "r")
     for i in f:
         loginPair = i[:-1].split(" :: ") # [:-1] - чтобы убрать перевод строки
-        addLoginPair(loginPair[0], loginPair[1] if len(loginPair) > 0 else "",loginPair[2] if len(loginPair) > 1 else "")
+        addLoginPair(loginPair[0], loginPair[1] if len(loginPair) > 1 else "",loginPair[2] if len(loginPair) > 2 else 0)
     f.close()
 
 def exportLP(file):
@@ -230,9 +231,9 @@ def mainMenu():
 
 def loginPairsCleaner():
     global listOfLogins
-    logger(debugLog, "lpc: {} loginpairs in list".format(len(listOfLogins)))
-    if(len(listOfLogins) > 0):
-        logger(debugLog, "lpc: cleaning loginpairs".format(len(listOfLogins)))
+    logger(debugLog, "{} loginpairs in list".format(len(listOfLogins)))
+    if(len(listOfLogins) > 500):
+        logger(debugLog, "cleaning loginpairs".format(len(listOfLogins)))
         listOfLogins = listOfLogins[:100]
         for i in listOfLogins:
             if i[0] > 0:
@@ -241,11 +242,11 @@ def loginPairsCleaner():
 def main():
     logger(honeypotLog, "STARTING...")
     logger(attackLog, "STARTINDG...")
+    importLP(defLogins)
     Thread(target=SSHhoneypot, args=()).start()
     Thread(target=mainMenu, args=()).start()
     Thread(target=SSHAttacker, args=()).start()
     while True:
-        time.sleep(1300) # 30 minutes
-        print("lpc")
+        time.sleep(1800) # 30 minutes
         loginPairsCleaner()
 main()
