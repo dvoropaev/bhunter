@@ -24,6 +24,7 @@ defLogins = configs + "defLogins.txt"
 
 #statistic
 attackedTargets = 0
+targetsInQ = 0
 hackedTargets = []
 
 listOfLogins = [] # login = (rate, ("login", "password"))
@@ -47,6 +48,7 @@ def debug(str):
 
 #------------- HoneyPot Section -------------
 def addTarget(target):
+    global targetsInQ += 1
     debug("{} {}".format(inspect.currentframe().f_code.co_name, target))
     queOfTargets.put(target)
     setOfCaptureTargets[target] = int(time.time())
@@ -161,7 +163,8 @@ def SSHAttacker():
                 logger(attackLog, "connection error   {}".format(target))
                 break
         logger(attackLog, "complete attack  {}".format(target))
-        attackedTargets += 1
+        global attackedTargets += 1
+        global targetsInQ -= 1
         listOfLogins.sort()
         listOfLogins.reverse()
 
