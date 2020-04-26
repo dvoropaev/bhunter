@@ -25,6 +25,7 @@ defLogins = configs + "defLogins.txt"
 #statistic
 attackedTargets = 0
 targetsInQ = 0
+hackedTargets = []
 
 listOfLogins = [] # login = (rate, ("login", "password"))
 queOfTargets = queue.Queue() #.put() .get()
