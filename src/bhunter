@@ -251,9 +251,9 @@ def mainMenu():
 def loginPairsCleaner():
     global listOfLogins
     logger(debugLog, "{} loginpairs in list".format(len(listOfLogins)))
-    if(len(listOfLogins) > 500):
+    if(len(listOfLogins) > 1000):
         logger(debugLog, "cleaning loginpairs".format(len(listOfLogins)))
-        listOfLogins = listOfLogins[:100]
+        listOfLogins = listOfLogins[:300]
         for i in listOfLogins:
             if i[0] > 0:
                 i[0] = max(1, i[0] - 1)
