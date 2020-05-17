@@ -1,5 +1,5 @@
 # bhunter
-# dependency
-python3-paramiko
-python3-libtmux
-tmux
+## dependency:
+python3-paramiko <br/>
+python3-libtmux <br/>
+tmux <br/>
