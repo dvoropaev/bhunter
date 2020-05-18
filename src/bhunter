@@ -53,7 +53,7 @@ def addTarget(target):
     targetsInQ += 1
     debug("{} {}".format(inspect.currentframe().f_code.co_name, target))
     burstShotsQue.put(target)
-    setOfCaptureTargets[target] = intburstShotsQue(time.time())
+    setOfCaptureTargets[target] = int(burstShotsQue(time.time())
     logger(honeypotLog, "new target   {}".format(target))
 
 def addLoginPair(login, password, rate):
