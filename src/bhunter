@@ -151,7 +151,7 @@ def SSHCheck(target, SSHport, user, password):
 def SingleShotAttack():
     while True:
         target = singleShotsQue.get()
-        logger(attackLog, "singleshot   {} {} {}".format(target)
+        logger(attackLog, "singleshot   {} {} {}".format(target))
         status = SSHCheck(target[0], target[1], target[2])
         if(status == 0):
             logger(attackLog, "PASSWORD FOUND   {} {} {}".format(target))
