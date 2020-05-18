@@ -151,14 +151,14 @@ def SSHCheck(target, SSHport, user, password):
 def SingleShotAttack():
     while True:
         target = singleShotsQue.get()
-        print("ss = ")
-        print(target)
-        logger(attackLog, "singleshot   {} {} {}".format(target))
+        # print("ss = ")
+        # print(target)
+        logger(attackLog, "singleshot   {} {} {}".format(target[0], target[1], target[2]))
         status = SSHCheck(target[0], target[1], target[2])
         if(status == 0):
-            logger(attackLog, "PASSWORD FOUND   {} {} {}".format(target))
+            logger(attackLog, "PASSWORD FOUND   {} {} {}".format(target[0], target[1], target[2]))
             logger(hacked, "{} {} {}".format(target))
-            hackedTargets.append("{} {} {}".format(target))
+            hackedTargets.append("{} {} {}".format(target[0], target[1], target[2]))
 
 def BurstAttack():
     while True:
