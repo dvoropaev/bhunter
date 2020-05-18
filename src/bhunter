@@ -154,7 +154,7 @@ def SingleShotAttack():
         # print("ss = ")
         # print(target)
         logger(attackLog, "singleshot   {} {} {}".format(target[0], target[1], target[2]))
-        status = SSHCheck(target[0], target[1], target[2])
+        status = SSHCheck(target[0], 22, target[1], target[2])
         if(status == 0):
             logger(attackLog, "PASSWORD FOUND   {} {} {}".format(target[0], target[1], target[2]))
             logger(hacked, "{} {} {}".format(target))
