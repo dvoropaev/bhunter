@@ -51,18 +51,15 @@ def debug(str):
 def addTarget(target):
     global targetsInQ
     targetsInQ += 1
-    debug("{} {}".format(inspect.currentframe().f_code.co_name, target))
     burstShotsQue.put(target)
     setOfCaptureTargets[target] = (int(time.time()))
     logger(honeypotLog, "new target   {}".format(target))
 
 def addLoginPair(login, password, rate):
-    debug("{} {} {} {}".format(inspect.currentframe().f_code.co_name, login, password, float(rate)))
     listOfLogins.append([rate, (login, password)])
     logger(honeypotLog, "new loginPair ({}, {})".format(login, password))
 
 def SSHLoginsCollector(source, client_socket):
-    debug("{} {} {}".format(inspect.currentframe().f_code.co_name, source, client_socket))
     HOST_KEY = paramiko.RSAKey(filename=serverKey)
     class SSHServerHandler (paramiko.ServerInterface):
         def __init__(self):
@@ -264,9 +261,7 @@ def mainMenu():
 
 def loginPairsCleaner():
     global listOfLogins
-    logger(debugLog, "{} loginpairs in list".format(len(listOfLogins)))
     if(len(listOfLogins) > 1000):
-        logger(debugLog, "cleaning loginpairs".format(len(listOfLogins)))
         listOfLogins = listOfLogins[:300]
         for i in listOfLogins:
             if i[0] > 0:
