@@ -1,5 +1,5 @@
 [Unit]
-Description = XXX
+Description = botnet-hunter
 
 [Service]
 ExecStart=/usr/bin/bhunter start
