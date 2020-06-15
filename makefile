@@ -4,7 +4,7 @@ install:
 	-install ./src/bhunter /usr/bin/
 	-install ./src/bhunter-ts /usr/bin/
 	-install ./src/bhunter.service /etc/systemd/system/
-	-install ./default/defLogins.txt /etc/bhunter/defLogins.txt
+	-install ./default/defLoginPairs.txt /etc/bhunter/
 keygen:
 	# -ssh-keygen -t rsa -f server.key
 	-ssh-keygen -m PEM -f server.key
