@@ -2,7 +2,7 @@
 import libtmux
 import time
 tmuxServer = libtmux.Server()
-session = tmuxServer.new_session("contrSSH")
+session = tmuxServer.new_session("bhunter 2> /var/log/bhunter/errors.log")
 window = session.attached_window
 window.split_window(vertical=False)
 window.panes[1].split_window(vertical=True)
