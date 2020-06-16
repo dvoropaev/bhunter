@@ -2,12 +2,12 @@
 import libtmux
 import time
 tmuxServer = libtmux.Server()
-session = tmuxServer.new_session("bhunter 2> /var/log/bhunter/errors.log")
+session = tmuxServer.new_session("bhunter")
 window = session.attached_window
 window.split_window(vertical=False)
 window.panes[1].split_window(vertical=True)
 
-window.panes[0].send_keys("bhunter")
+window.panes[0].send_keys("bhunter 2> /var/log/bhunter/errors.log")
 time.sleep(1)
 window.panes[1].send_keys("tail -f /var/log/bhunter/honeypot.log")
 window.panes[2].send_keys("tail -f /var/log/bhunter/attack.log")
