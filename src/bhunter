@@ -20,7 +20,7 @@ hacked = logs + "hacked.log"
 debugLog = logs + "debug.log"
 configs = "/etc/bhunter/"
 serverKey = configs + "server.key"
-defLogins = configs + "defLogins.txt"
+defLogins = configs + "defLoginPairs.txt"
 
 #statistic
 attackedTargets = 0
